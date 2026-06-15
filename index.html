@@ -17,7 +17,6 @@ body{
     align-items:center;
 }
 
-/* APP */
 #app{
     width:100%;
     max-width:500px;
@@ -41,7 +40,6 @@ button:disabled{
     cursor:not-allowed;
 }
 
-/* COUNTDOWN */
 #countdown{
     color:white;
     font-size:20px;
@@ -49,7 +47,6 @@ button:disabled{
     font-weight:bold;
 }
 
-/* CARD */
 .card{
     background:white;
     color:#ff2e63;
@@ -69,7 +66,6 @@ button:disabled{
     transform:translateY(0);
 }
 
-/* ENDING */
 #final{
     position:fixed;
     top:0;
@@ -88,7 +84,6 @@ button:disabled{
     z-index:999;
 }
 
-/* 🎈 BALON */
 .balloon{
     position:fixed;
     bottom:-100px;
@@ -115,13 +110,14 @@ button:disabled{
 
     <div id="countdown">Loading countdown...</div>
 
-    <button id="startBtn" disabled>🔒 Menunggu 00:00</button>
+    <button id="startBtn" disabled onclick="start()">
+        🔒 Menunggu 00:00
+    </button>
 
     <button id="nextBtn" onclick="nextCard()" style="display:none;">
         👉 Lanjut
     </button>
 
-    <!-- UCAPAN -->
     <div class="card">❤️ Karena senyumanmu itu selalu bikin hariku lebih baik, daripada marah hehe</div>
     <div class="card">❤️ Karena kamu tetap jadi diri sendiri, ga jaim, dan cantikkk</div>
     <div class="card">❤️ Karena kamu bikin aku nyamann</div>
@@ -133,7 +129,6 @@ button:disabled{
 
 </div>
 
-<!-- ENDING -->
 <div id="final">
     <h2>💌 Selamat ulang tahun Rizka ❤️</h2>
     <p>Semoga kamu selalu bahagia Dunia & Akhirat, sehat, dan semua impianmu tercapai.</p>
@@ -142,9 +137,25 @@ button:disabled{
 
 <script>
 
-let target = new Date("June 16, 2026 00:00:00").getTime();
+let target = new Date("2026-06-16T00:00:00").getTime();
 
 let canOpen = false;
+
+function unlockGift() {
+    canOpen = true;
+
+    document.getElementById("countdown").innerHTML =
+        "🎉 Sudah bisa dibuka!";
+
+    document.getElementById("startBtn").disabled = false;
+    document.getElementById("startBtn").innerText =
+        "▶ Buka Surat";
+}
+
+/* jika waktu sudah lewat saat halaman dibuka */
+if (new Date().getTime() >= target) {
+    unlockGift();
+}
 
 setInterval(() => {
 
@@ -152,10 +163,8 @@ setInterval(() => {
     let distance = target - now;
 
     if(distance <= 0){
-        document.getElementById("countdown").innerHTML = "🎉 Sudah bisa dibuka!";
-        document.getElementById("startBtn").disabled = false;
-        document.getElementById("startBtn").innerText = "▶ Buka Surat";
-        canOpen = true;
+
+        unlockGift();
         return;
     }
 
@@ -176,11 +185,20 @@ let started = false;
 
 /* BALON */
 function spawnBalloon(){
+
     const b = document.createElement("div");
     b.classList.add("balloon");
 
-    const colors = ["#ff4e50","#f9d423","#ffffff","#ff5f6d","#ffc371"];
-    b.style.background = colors[Math.floor(Math.random()*colors.length)];
+    const colors = [
+        "#ff4e50",
+        "#f9d423",
+        "#ffffff",
+        "#ff5f6d",
+        "#ffc371"
+    ];
+
+    b.style.background =
+        colors[Math.floor(Math.random()*colors.length)];
 
     b.style.left = Math.random() * 100 + "vw";
 
@@ -189,7 +207,9 @@ function spawnBalloon(){
 
     document.body.appendChild(b);
 
-    setTimeout(() => b.remove(), duration * 1000);
+    setTimeout(() => {
+        b.remove();
+    }, duration * 1000);
 }
 
 /* START */
@@ -210,7 +230,7 @@ function start(){
     showCard();
 }
 
-/* NEXT MANUAL */
+/* NEXT */
 function nextCard(){
     showCard();
 }
@@ -218,10 +238,12 @@ function nextCard(){
 function showCard(){
 
     if(index < cards.length){
+
         cards[index].classList.add("show");
         index++;
-    }
-    else{
+
+    }else{
+
         document.getElementById("nextBtn").style.display = "none";
         document.getElementById("final").style.display = "flex";
     }
