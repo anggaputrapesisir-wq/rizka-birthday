@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Untuk Rizka ❤️</title>
+
+<style>
+body{
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background: linear-gradient(135deg,#ff5f6d,#ffc371);
+    color:white;
+    text-align:center;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+#locked{
+    max-width:500px;
+    padding:20px;
+}
+
+#countdown{
+    font-size:22px;
+    margin-top:15px;
+    font-weight:bold;
+}
+
+#content{
+    display:none;
+    padding:20px;
+    width:100%;
+}
+
+.card{
+    background:white;
+    color:#ff2e63;
+    padding:15px;
+    margin:10px;
+    border-radius:15px;
+}
+
+h1{
+    margin-bottom:10px;
+}
+button{
+    margin-top:15px;
+    padding:10px;
+    border:none;
+    border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🔒 LOCK SCREEN -->
+<div id="locked">
+    <h1>🔒 Website ini terkunci</h1>
+    <p>Untuk Rizka Amarylis Shifany ❤️</p>
+    <p>Menunggu momen spesial...</p>
+
+    <div id="countdown"></div>
+
+    <p style="margin-top:10px;opacity:0.8;">
+        Buka saat waktunya tiba ❤️
+    </p>
+</div>
+
+<!-- 🎁 CONTENT -->
+<div id="content">
+
+    <h1>🎂 Happy Birthday Rizka ❤️</h1>
+
+    <audio id="music" loop>
+        <source src="https://files.catbox.moe/6z5c9r.mp3" type="audio/mpeg">
+    </audio>
+
+    <button onclick="document.getElementById('music').play()">
+        ▶ Play Music
+    </button>
+
+    <div class="card">❤️ Karena senyummu selalu bikin hariku lebih baik</div>
+    <div class="card">❤️ Karena dulu kamu sering ilfeel sama aku di kuliah</div>
+    <div class="card">❤️ Karena kamu tetap jadi diri sendiri</div>
+    <div class="card">❤️ Karena kamu bikin aku nyaman</div>
+    <div class="card">❤️ Karena sejak Agustus 2025 hidupku berubah</div>
+    <div class="card">❤️ Karena kamu selalu di pikiranku</div>
+    <div class="card">❤️ Karena kamu bikin hari biasa jadi spesial</div>
+    <div class="card">❤️ Karena aku sering senyum sendiri ingat kamu</div>
+    <div class="card">❤️ Karena kamu rumah paling nyaman</div>
+    <div class="card">❤️ Karena aku bangga sama kamu</div>
+    <div class="card">❤️ Karena aku ingin memperjuangkan kamu</div>
+    <div class="card">❤️ Karena masa depanku selalu ada kamu</div>
+
+    <div class="card" style="margin-top:20px;">
+        💌 Selamat ulang tahun Rizka (23 Tahun)<br><br>
+        Aku bersyukur kamu ada di hidupku sejak Agustus 2025.<br>
+        Semoga kamu selalu bahagia, sehat, dan semua impianmu tercapai.<br><br>
+        ❤️ Aku sayang kamu ❤️
+    </div>
+
+</div>
+
+<script>
+// ⏳ TARGET WAKTU
+let target = new Date("June 16, 2026 00:00:00").getTime();
+
+let x = setInterval(function(){
+
+    let now = new Date().getTime();
+    let distance = target - now;
+
+    let days = Math.floor(distance / (1000*60*60*24));
+    let hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
+    let minutes = Math.floor((distance % (1000*60*60))/(1000*60));
+    let seconds = Math.floor((distance % (1000*60))/1000);
+
+    document.getElementById("countdown").innerHTML =
+        days+" Hari "+hours+" Jam "+minutes+" Menit "+seconds+" Detik ❤️";
+
+    // 🔓 OPEN WEBSITE
+    if(distance <= 0){
+        clearInterval(x);
+        document.getElementById("locked").style.display = "none";
+        document.getElementById("content").style.display = "block";
+    }
+
+},1000);
+</script>
+
+</body>
+</html>
