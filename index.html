@@ -3,88 +3,125 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Untuk Rizkaaaa❤️❤️❤️</title>
+<title>Untuk Rizka ❤️</title>
 
 <style>
 body{
     margin:0;
     font-family:'Segoe UI',sans-serif;
     background: linear-gradient(135deg,#ff5f6d,#ffc371);
-    color:white;
-    text-align:center;
     min-height:100vh;
+    overflow:hidden;
     display:flex;
-    align-items:center;
     justify-content:center;
+    align-items:center;
 }
 
-/* biar tidak terasa blank */
-#locked, #content{
+/* APP */
+#app{
     width:100%;
     max-width:500px;
+    text-align:center;
     padding:20px;
 }
 
+h1{ color:white; }
+
+button{
+    padding:12px 18px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+button:disabled{
+    opacity:0.5;
+    cursor:not-allowed;
+}
+
+/* COUNTDOWN */
 #countdown{
-    font-size:22px;
-    margin-top:15px;
+    color:white;
+    font-size:20px;
+    margin-top:10px;
     font-weight:bold;
 }
 
-#content{
-    display:none;
-}
-
+/* CARD */
 .card{
     background:white;
     color:#ff2e63;
     padding:15px;
     margin:10px;
     border-radius:15px;
+
+    display:none;
+    opacity:0;
+    transform:translateY(20px);
+    transition:0.5s ease;
 }
 
-h1{
-    margin-bottom:10px;
+.card.show{
+    display:block;
+    opacity:1;
+    transform:translateY(0);
 }
 
-button{
-    margin-top:15px;
-    padding:10px;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
+/* ENDING */
+#final{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100vh;
+
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+
+    background:white;
+    color:#ff2e63;
+    z-index:999;
+}
+
+/* 🎈 BALON */
+.balloon{
+    position:fixed;
+    bottom:-100px;
+    width:22px;
+    height:30px;
+    border-radius:50%;
+    opacity:0.8;
+    animation: floatUp linear forwards;
+    z-index:1;
+}
+
+@keyframes floatUp{
+    from{ transform: translateY(0); }
+    to{ transform: translateY(-120vh); }
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🔒 LOCK SCREEN -->
-<div id="locked">
-    <h1>🔒 Website ini terkunci</h1>
-    <p>Untuk Rizka Amarylis Shifany ❤️</p>
-    <p>Menunggu momen spesial...</p>
+<div id="app">
+
+    <h1>🎂 Untuk Rizka ❤️</h1>
 
     <div id="countdown">Loading countdown...</div>
 
-    <p style="margin-top:10px;opacity:0.8;">
-        Buka saat waktunya tiba ❤️
-    </p>
-</div>
+    <button id="startBtn" disabled>🔒 Menunggu 00:00</button>
 
-<!-- 🎁 CONTENT -->
-<div id="content">
-
-    <h1>🎂 Happy Birthday Rizka ❤️</h1>
-
-    <audio id="music" loop>
-        <source src="https://files.catbox.moe/6z5c9r.mp3" type="audio/mpeg">
-    </audio>
-
-    <button onclick="document.getElementById('music').play()">
-        ▶ Play Music
+    <button id="nextBtn" onclick="nextCard()" style="display:none;">
+        👉 Lanjut
     </button>
 
+    <!-- UCAPAN -->
     <div class="card">❤️ Karena senyumanmu itu selalu bikin hariku lebih baik, daripada marah hehe</div>
     <div class="card">❤️ Karena kamu tetap jadi diri sendiri, ga jaim, dan cantikkk</div>
     <div class="card">❤️ Karena kamu bikin aku nyamann</div>
@@ -94,35 +131,31 @@ button{
     <div class="card">❤️ Karena aku ingin memperjuangkan kamu</div>
     <div class="card">❤️ Karena masa depanku adalah kamu</div>
 
-    <div class="card">
-        💌 Selamat ulang tahun Rizka ❤️<br><br>
-        Semoga kamu selalu bahagia Dunia & Akhirat, sehat, dan semua impianmu tercapai.<br><br>
-        ❤️
-    </div>
+</div>
 
+<!-- ENDING -->
+<div id="final">
+    <h2>💌 Selamat ulang tahun Rizka ❤️</h2>
+    <p>Semoga kamu selalu bahagia Dunia & Akhirat, sehat, dan semua impianmu tercapai.</p>
+    <h3>❤️ Aku sayang kamu ❤️</h3>
 </div>
 
 <script>
-console.log("Website loaded");
 
-// ⏳ TARGET WAKTU (AMAN DI SEMUA BROWSER)
-let target = new Date(2026, 5, 16, 0, 0, 0).getTime();
+let target = new Date("June 16, 2026 00:00:00").getTime();
 
-let x = setInterval(function(){
+let canOpen = false;
+
+setInterval(() => {
 
     let now = new Date().getTime();
     let distance = target - now;
 
-    // kalau error tanggal
-    if (isNaN(distance)) {
-        document.getElementById("countdown").innerHTML = "Error: tanggal tidak valid";
-        return;
-    }
-
-    if (distance <= 0) {
-        clearInterval(x);
-        document.getElementById("locked").style.display = "none";
-        document.getElementById("content").style.display = "block";
+    if(distance <= 0){
+        document.getElementById("countdown").innerHTML = "🎉 Sudah bisa dibuka!";
+        document.getElementById("startBtn").disabled = false;
+        document.getElementById("startBtn").innerText = "▶ Buka Surat";
+        canOpen = true;
         return;
     }
 
@@ -135,6 +168,65 @@ let x = setInterval(function(){
         `${days} Hari ${hours} Jam ${minutes} Menit ${seconds} Detik ❤️`;
 
 }, 1000);
+
+/* STATE */
+let cards = [];
+let index = 0;
+let started = false;
+
+/* BALON */
+function spawnBalloon(){
+    const b = document.createElement("div");
+    b.classList.add("balloon");
+
+    const colors = ["#ff4e50","#f9d423","#ffffff","#ff5f6d","#ffc371"];
+    b.style.background = colors[Math.floor(Math.random()*colors.length)];
+
+    b.style.left = Math.random() * 100 + "vw";
+
+    let duration = 4 + Math.random() * 3;
+    b.style.animationDuration = duration + "s";
+
+    document.body.appendChild(b);
+
+    setTimeout(() => b.remove(), duration * 1000);
+}
+
+/* START */
+function start(){
+
+    if(!canOpen) return;
+    if(started) return;
+
+    started = true;
+
+    cards = document.querySelectorAll(".card");
+
+    document.getElementById("startBtn").style.display = "none";
+    document.getElementById("nextBtn").style.display = "inline-block";
+
+    setInterval(spawnBalloon, 500);
+
+    showCard();
+}
+
+/* NEXT MANUAL */
+function nextCard(){
+    showCard();
+}
+
+function showCard(){
+
+    if(index < cards.length){
+        cards[index].classList.add("show");
+        index++;
+    }
+    else{
+        document.getElementById("nextBtn").style.display = "none";
+        document.getElementById("final").style.display = "flex";
+    }
+}
+
 </script>
 
 </body>
