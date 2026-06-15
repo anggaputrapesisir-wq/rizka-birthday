@@ -18,7 +18,9 @@ body{
     justify-content:center;
 }
 
-#locked{
+/* biar tidak terasa blank */
+#locked, #content{
+    width:100%;
     max-width:500px;
     padding:20px;
 }
@@ -31,8 +33,6 @@ body{
 
 #content{
     display:none;
-    padding:20px;
-    width:100%;
 }
 
 .card{
@@ -46,11 +46,13 @@ body{
 h1{
     margin-bottom:10px;
 }
+
 button{
     margin-top:15px;
     padding:10px;
     border:none;
     border-radius:10px;
+    cursor:pointer;
 }
 </style>
 </head>
@@ -63,7 +65,7 @@ button{
     <p>Untuk Rizka Amarylis Shifany ❤️</p>
     <p>Menunggu momen spesial...</p>
 
-    <div id="countdown"></div>
+    <div id="countdown">Loading countdown...</div>
 
     <p style="margin-top:10px;opacity:0.8;">
         Buka saat waktunya tiba ❤️
@@ -84,35 +86,45 @@ button{
     </button>
 
     <div class="card">❤️ Karena senyummu selalu bikin hariku lebih baik</div>
-    <div class="card">❤️ Karena dulu kamu sering ilfeel sama aku di kuliah</div>
     <div class="card">❤️ Karena kamu tetap jadi diri sendiri</div>
     <div class="card">❤️ Karena kamu bikin aku nyaman</div>
-    <div class="card">❤️ Karena sejak Agustus 2025 hidupku berubah</div>
-    <div class="card">❤️ Karena kamu selalu di pikiranku</div>
     <div class="card">❤️ Karena kamu bikin hari biasa jadi spesial</div>
-    <div class="card">❤️ Karena aku sering senyum sendiri ingat kamu</div>
     <div class="card">❤️ Karena kamu rumah paling nyaman</div>
     <div class="card">❤️ Karena aku bangga sama kamu</div>
     <div class="card">❤️ Karena aku ingin memperjuangkan kamu</div>
     <div class="card">❤️ Karena masa depanku selalu ada kamu</div>
 
-    <div class="card" style="margin-top:20px;">
-        💌 Selamat ulang tahun Rizka (23 Tahun)<br><br>
-        Aku bersyukur kamu ada di hidupku sejak Agustus 2025.<br>
+    <div class="card">
+        💌 Selamat ulang tahun Rizka ❤️<br><br>
         Semoga kamu selalu bahagia, sehat, dan semua impianmu tercapai.<br><br>
-        ❤️ Aku sayang kamu ❤️
+        ❤️
     </div>
 
 </div>
 
 <script>
-// ⏳ TARGET WAKTU
-let target = new Date("June 16, 2026 00:00:00").getTime();
+console.log("Website loaded");
+
+// ⏳ TARGET WAKTU (AMAN DI SEMUA BROWSER)
+let target = new Date(2026, 5, 16, 0, 0, 0).getTime();
 
 let x = setInterval(function(){
 
     let now = new Date().getTime();
     let distance = target - now;
+
+    // kalau error tanggal
+    if (isNaN(distance)) {
+        document.getElementById("countdown").innerHTML = "Error: tanggal tidak valid";
+        return;
+    }
+
+    if (distance <= 0) {
+        clearInterval(x);
+        document.getElementById("locked").style.display = "none";
+        document.getElementById("content").style.display = "block";
+        return;
+    }
 
     let days = Math.floor(distance / (1000*60*60*24));
     let hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
@@ -120,16 +132,9 @@ let x = setInterval(function(){
     let seconds = Math.floor((distance % (1000*60))/1000);
 
     document.getElementById("countdown").innerHTML =
-        days+" Hari "+hours+" Jam "+minutes+" Menit "+seconds+" Detik ❤️";
+        `${days} Hari ${hours} Jam ${minutes} Menit ${seconds} Detik ❤️`;
 
-    // 🔓 OPEN WEBSITE
-    if(distance <= 0){
-        clearInterval(x);
-        document.getElementById("locked").style.display = "none";
-        document.getElementById("content").style.display = "block";
-    }
-
-},1000);
+}, 1000);
 </script>
 
 </body>
